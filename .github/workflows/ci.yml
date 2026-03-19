@@ -5,9 +5,27 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint code
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v5
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Ruff
+        run: pip install ruff
+
+      - name: Run Ruff check
+        run: ruff check .
   test:
     runs-on: ubuntu-latest
     name: Run tests
+    needs: lint
 
     steps:
       - uses: actions/checkout@v5
