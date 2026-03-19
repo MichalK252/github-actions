@@ -1,17 +1,17 @@
-name: Run tests
+name: Run tests # nazwa workflow
 
 on:
-  push:
-  pull_request:
+  push: #EVENT
+  pull_request: #EVENT
 
-jobs:
+jobs: # JOB
   test:
     runs-on: ubuntu-latest
     name: Run tests
 
     steps:
       - uses: actions/checkout@v5
-        name: Checkout repo
+        name: Checkout repo # KROK 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -21,4 +21,4 @@ jobs:
           pip install -r requirements.txt
         name: Install dependencies
       - run: pytest -q
-        name: Run pytest
+        name: Run pytest # KROK 2
