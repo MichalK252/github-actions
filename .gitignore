@@ -1,7 +1,8 @@
 __pycache__/
 .pytest_cache/
+.ruff_cache/
 .venv/
+reports/
 *.pyc
-.DS_Store
-.idea/
-venv
+.env
+.idea
