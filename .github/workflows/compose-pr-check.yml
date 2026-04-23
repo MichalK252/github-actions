@@ -36,9 +36,11 @@ jobs:
       - name: Summary
         if: always()
         run: |
-        cat <<EOF >> $GITHUB_STEP_SUMMARY
+          echo "Smoke Test" >> $GITHUB_STEP_SUMMARY
+          echo " - Event: ${{ github.event_name }}" >> GITHUB_STEP_SUMMARY
+          echo " - Ref: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo " - Result: ${{ steps.smoke.outputs.status }}" >> $GITHUB_STEP_SUMMARY
 
-        - Event: ${{ github.event_name }}
-        - Ref: ${{ github.ref }}
-        - Result: ${{ job.status }}
-        EOF
+      - name: Stop compose
+        if: always()
+        run: docker compose down
