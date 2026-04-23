@@ -30,16 +30,19 @@ jobs:
         if: always() 
         uses: actions/upload-artifact@v4
         with:
-          name: compose-logs
+          name: compose-logs-${{ github.event.pull_request.number }}
           path: compose.log
 
       - name: Summary
         if: always()
         run: |
           echo "Smoke Test" >> $GITHUB_STEP_SUMMARY
-          echo " - Event: ${{ github.event_name }}" >> GITHUB_STEP_SUMMARY
+          echo " - Event: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
           echo " - Ref: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
           echo " - Result: ${{ steps.smoke.outputs.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "#### ZADANIE 3 " >> $GITHUB_STEP_SUMMARY
+          echo " - Actor: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo " - PR event: ${{ github.event.pull_request.number }} " >> $GITHUB_STEP_SUMMARY
 
       - name: Stop compose
         if: always()
