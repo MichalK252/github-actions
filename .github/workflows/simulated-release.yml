@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build docker image
-        uses: docker build -t gha-gr2-release:${{ github.sha }}
+        uses: docker build -t gha-gr2-release:${{ github.sha }} .
       
       - name: Save image to file
         run: docker save gha-gr2-release:${{ github.sha }} -o image.tar
@@ -26,10 +26,13 @@ jobs:
           name: docker-image-${{ github.sha }}
           path: image.tar.gz
 
+      - name: Compress image
+        run: gzip image.tar
+
       - name: Summary
         run: |
           echo "Actor: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
           echo "Branch/Ref: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
           echo "SHA: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
           echo "Artifact: docker-image${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-          echo "Stimulated release" >> $GITHUB_STEP_SUMMARy
+          echo "Simulated release" >> $GITHUB_STEP_SUMMARY
